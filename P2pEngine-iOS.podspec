@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'P2pEngine-iOS'
-  s.version = '3.1.0'
+  s.version = '3.1.1'
   s.license = 'MIT'
   s.summary = 'P2P Streaming Engine for iOS, tvOS and macOS.'
   s.homepage = 'https://www.cdnbye.com/en/'
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
   s.source        = { :git => 'https://github.com/swarm-cloud/P2pEngine-iOS.git', :tag => s.version }
 
-  s.dependency 'datachannel-iOS', '~> 1.0.19'
+  s.dependency 'datachannel-iOS', '= 1.0.19'
 
   s.vendored_frameworks = 'SwarmCloudKit.xcframework'
 
