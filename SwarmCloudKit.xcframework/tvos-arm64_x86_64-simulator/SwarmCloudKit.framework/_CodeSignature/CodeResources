@@ -18,7 +18,7 @@
 		</data>
 		<key>Headers/SwarmCloudKit-Swift.h</key>
 		<data>
-		R0jSkejIfcz6gCgl32R9ftLlDEg=
+		ULZtHoGaXJEUJCrAr75wQVDgPoI=
 		</data>
 		<key>Headers/SwarmCloudKit.h</key>
 		<data>
@@ -26,51 +26,51 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		tfdloZl28qrJkY2GDb9/a1Z53l0=
+		Y+pLaVBAqIkbLgfh+X6YcCqr1h8=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<data>
-		ouCP1Wsy5LWoO/p7L9Cxt3GqpPY=
+		Hh0v2d2fwRy3b+F7NLhIjiLPu+c=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		S4ysxMHI94hrrceMM3kQaxNp28w=
+		zvs3+zpg/8jAe25T27/PzzTMR4Q=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		OJ92iGd5mmvrN8leGM0gAA0+RWk=
+		+panAZUxoOOOeMjuuBVIbUpWyQE=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		S4ysxMHI94hrrceMM3kQaxNp28w=
+		zvs3+zpg/8jAe25T27/PzzTMR4Q=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		JU7i0Wwq2CkiddELUSsiX3WO/5s=
+		tYkvNnIJhoRE3AmcoOVBhxAaLrs=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<data>
-		ouCP1Wsy5LWoO/p7L9Cxt3GqpPY=
+		Hh0v2d2fwRy3b+F7NLhIjiLPu+c=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		BcnPWQm16eawUnP/lB3BK3HDqso=
+		WXdGtTMIF5p0MWvQXZGBW/HOI8w=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		IMtaEFIkdSPCi22jYMHMSSZ59a8=
+		euZNy9fKqgqxJmAFoPO2SQfdWAE=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		BcnPWQm16eawUnP/lB3BK3HDqso=
+		WXdGtTMIF5p0MWvQXZGBW/HOI8w=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		3wqqVHpnyN3CWzyiMrYRFRzOWhw=
+		6UtaSLpVGVpYfoYieM2tM6jsOY4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		HsELroXM9Ha6/tkBjbmDKBvHEq8=
+		a5T96YtoGIWDha4ennFWbNwE0ns=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -100,7 +100,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vgznVA5q6zDUzmRMtt+06fMWRxm4mgnb5+Q0tUjQEuA=
+			Ipa0W1iQEYeeanQuFk0bn3AI5IWYNAUoU4wR/fm3H1U=
 			</data>
 		</dict>
 		<key>Headers/SwarmCloudKit.h</key>
@@ -114,77 +114,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+LHdmhGv7/D6X5ZOpb5pzUlzUPN2eBlDpVQG+iwdIcM=
+			m/tSQ1q5dDqtgT1R1UIC+MdB9dKueOtzWeUH1K57SMM=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MJTRxt5fervXCjrT9izlB7UWV3Ot4WGyJc5VCXE45u8=
+			wRQnJHNFX6WsHTSL77DjXqVz0sp1Hk/cJddQJPz+PmQ=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			gqkPOpOcc2gemmc2g+2dXgWQu7q8BX2LkAO8c3SaU1A=
+			9G2DvJVbp27H4aN5mnPfDRVuitHQzgTi1wxk6/RGIAA=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MJTRxt5fervXCjrT9izlB7UWV3Ot4WGyJc5VCXE45u8=
+			wRQnJHNFX6WsHTSL77DjXqVz0sp1Hk/cJddQJPz+PmQ=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HnTenHaqniZdvMTwXEbp+kB4gf6U1YxMsGCEGW5nxTI=
+			fG+6gcXFmSE+tmpSixX8zRfgtj7pjzcI4xnIYJMoIGc=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+LHdmhGv7/D6X5ZOpb5pzUlzUPN2eBlDpVQG+iwdIcM=
+			m/tSQ1q5dDqtgT1R1UIC+MdB9dKueOtzWeUH1K57SMM=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			go2wyOeYV38EN87I/ZruHTSU/7h4XqvFCwFIFL+ueg8=
+			l8PJofvXRmaYIkWjccEsG+cTzgJvPA9d1OywCSiNnnk=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3gp3rFJoAxBZqXkne2ediM/3eb1p5uSAp3thHm60aCw=
+			cbU3Uj+jNMYJIwT+WItvAicF0cfjenRmfv9KTpPs3Yw=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			go2wyOeYV38EN87I/ZruHTSU/7h4XqvFCwFIFL+ueg8=
+			l8PJofvXRmaYIkWjccEsG+cTzgJvPA9d1OywCSiNnnk=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			up5UdqSnABJ4DDU+y84+7LxU8Ek/I6jwdUXIBKGRrL0=
+			lK8ox0dINUDkU/IGxw1i3FygPYlwiLREpP0j5euM40w=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CqccH+Mvtk/CyziDBtFx0GuO778m8auZsM+VVD9H8w8=
+			J1zwKxyr1xH4qpvCRa9EwWF3E8B9lnd0Sv84/HpWTM4=
 			</data>
 		</dict>
 	</dict>

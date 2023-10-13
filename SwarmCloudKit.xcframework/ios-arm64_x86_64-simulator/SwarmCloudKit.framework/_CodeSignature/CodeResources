@@ -18,7 +18,7 @@
 		</data>
 		<key>Headers/SwarmCloudKit-Swift.h</key>
 		<data>
-		R0jSkejIfcz6gCgl32R9ftLlDEg=
+		ULZtHoGaXJEUJCrAr75wQVDgPoI=
 		</data>
 		<key>Headers/SwarmCloudKit.h</key>
 		<data>
@@ -26,51 +26,51 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		DdoD9TGLPMHOoIKRYWdOJMWWY90=
+		8cRDhdLKdm7+zIrqPlDSZjGgT5A=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		I+u3AwVjY/P8eh7HuZmjOX4t8M0=
+		dek6XBFc5YAcAKQxleXgkxlRZCQ=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		SDjPjX8W7lk1i1l5BVdjMnxnDcg=
+		98dFwy3N/0DExl9VWng6Wfh8Ois=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		Zl9bYM83ReUsZy2WZY9IyafS9jU=
+		hueO+LCzeABKyp5tKJMXDulEFb4=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		SDjPjX8W7lk1i1l5BVdjMnxnDcg=
+		98dFwy3N/0DExl9VWng6Wfh8Ois=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		y/ZwMDnih1RUr8FeOtIrJBzkgjA=
+		y9LSgyAQ9S6KgzHftnqIoR+hZtk=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		I+u3AwVjY/P8eh7HuZmjOX4t8M0=
+		dek6XBFc5YAcAKQxleXgkxlRZCQ=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		luIHPgQd4XHCsysHmn01dtct2P4=
+		0Y033pwHe65mkHIZFRnqNK5rI/U=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		S7P+5No1uxyrQEle4OknqVXvxx4=
+		PXIkS0mFRCKVDYcwkLzzVWT3nyY=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		luIHPgQd4XHCsysHmn01dtct2P4=
+		0Y033pwHe65mkHIZFRnqNK5rI/U=
 		</data>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		3ifKK1TUbxjAWCfMUs1PAADAves=
+		HXqUVBjMBuZp5gF2N0Ynzw06CWM=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		HsELroXM9Ha6/tkBjbmDKBvHEq8=
+		a5T96YtoGIWDha4ennFWbNwE0ns=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -100,7 +100,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vgznVA5q6zDUzmRMtt+06fMWRxm4mgnb5+Q0tUjQEuA=
+			Ipa0W1iQEYeeanQuFk0bn3AI5IWYNAUoU4wR/fm3H1U=
 			</data>
 		</dict>
 		<key>Headers/SwarmCloudKit.h</key>
@@ -114,77 +114,77 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kOo4u1n83leSsxtMnjcbImaXzKTagtfvgQjR7yQxqzg=
+			4qRZn36C1lQQbP6wp9z6x8675bfaC/4YdeyicjOwzDs=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			F7MT+aUBoXk6AUYog2EyyGHskb0Rh8iwqqcotLSQ2jY=
+			sJtGd0eXObcbCKEZCJwrYFBycP0xwb1QeFxYJ0JMzzU=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IEUdcTdHYaPnNisSgJKichpZ2Bvc0x97h+qf6PgOR4=
+			c6oFZYNmvb5PNPQCtF7oKq82aLAq1AQct5pxnXrqus4=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			F7MT+aUBoXk6AUYog2EyyGHskb0Rh8iwqqcotLSQ2jY=
+			sJtGd0eXObcbCKEZCJwrYFBycP0xwb1QeFxYJ0JMzzU=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zxvT4SCgWUrLS/sHwCwLEKQ1i+879cVdqHATZUw1xw8=
+			YxuKJEQb5z18Dxasm5bVJLTrNnCUwV4OLar5Y93QCy4=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kOo4u1n83leSsxtMnjcbImaXzKTagtfvgQjR7yQxqzg=
+			4qRZn36C1lQQbP6wp9z6x8675bfaC/4YdeyicjOwzDs=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UNyEMlp1UVfjXkIveuYEJFDkVd+kdSlr+49L+/3JwHQ=
+			XJ0xEYE3gcoXL0j4mqy5QRkf9WexK8sHT/ctGGlThdg=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			27wlygStMO707CFgurpnRYkwaYWz9kFbi0igWBknK88=
+			Dd7PW2LMdlSX4lm6xGe3hl9lurfNkj0dcmo441tPSsk=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UNyEMlp1UVfjXkIveuYEJFDkVd+kdSlr+49L+/3JwHQ=
+			XJ0xEYE3gcoXL0j4mqy5QRkf9WexK8sHT/ctGGlThdg=
 			</data>
 		</dict>
 		<key>Modules/SwarmCloudKit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			H13axVxKZRfK2Bi6zf+2tyqlzuCkThHJd5ynuVoxASo=
+			fsqVCfADf2diJYhT5LzuDeYnsiP2/7On6+oqZsuFnUY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CqccH+Mvtk/CyziDBtFx0GuO778m8auZsM+VVD9H8w8=
+			J1zwKxyr1xH4qpvCRa9EwWF3E8B9lnd0Sv84/HpWTM4=
 			</data>
 		</dict>
 	</dict>

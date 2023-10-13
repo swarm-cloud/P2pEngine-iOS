@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.8.1 (swiftlang-5.8.0.124.5 clang-1403.0.22.11.100)
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
 // swift-module-flags: -target arm64-apple-tvos13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SwarmCloudKit
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import Combine
@@ -15,6 +15,7 @@ import UIKit
 import UniformTypeIdentifiers
 import _Concurrency
 import _StringProcessing
+import _SwiftConcurrencyShims
 import datachannel_wrapper
 import zlib
 @_inheritsConvenienceInitializers open class MasterPlaylist : SwarmCloudKit.HlsPlaylist {
@@ -260,6 +261,44 @@ public struct StunResult {
   public var ipAddr: SwarmCloudKit.SocketAddress? {
     get
   }
+}
+public enum SerializationError : Swift.Error {
+  case invalidObject
+  case notSupported
+  public static func == (a: SwarmCloudKit.SerializationError, b: SwarmCloudKit.SerializationError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol HttpResponseBodyWriter {
+  func write(_ data: [Swift.UInt8]) throws
+  func write(_ data: Swift.ArraySlice<Swift.UInt8>) throws
+  func write(_ data: Foundation.NSData) throws
+  func write(_ data: Foundation.Data) throws
+}
+public enum HttpResponseBody {
+  case json(Any)
+  case html(Swift.String)
+  case htmlBody(Swift.String)
+  case text(Swift.String)
+  case data(Foundation.Data, contentType: Swift.String? = nil)
+  case custom(Any, (Any) throws -> Swift.String)
+}
+public enum HttpResponse {
+  case switchProtocols([Swift.String : Swift.String], (SwarmCloudKit.Socket) -> Swift.Void)
+  case ok(SwarmCloudKit.HttpResponseBody, _: [Swift.String : Swift.String] = [:]), created, accepted
+  case movedPermanently(Swift.String)
+  case movedTemporarily(Swift.String)
+  case badRequest(SwarmCloudKit.HttpResponseBody?), unauthorized(SwarmCloudKit.HttpResponseBody?), forbidden(SwarmCloudKit.HttpResponseBody?), notFound(_: SwarmCloudKit.HttpResponseBody? = nil), notAcceptable(SwarmCloudKit.HttpResponseBody?), tooManyRequests(SwarmCloudKit.HttpResponseBody?), internalServerError(SwarmCloudKit.HttpResponseBody?)
+  case raw(Swift.Int, Swift.String, [Swift.String : Swift.String]?, ((any SwarmCloudKit.HttpResponseBodyWriter) throws -> Swift.Void)?)
+  public var statusCode: Swift.Int {
+    get
+  }
+  public var reasonPhrase: Swift.String {
+    get
+  }
+  public func headers() -> [Swift.String : Swift.String]
 }
 @objc public enum TrackerZone : Swift.Int {
   case Europe = 0
@@ -690,6 +729,7 @@ extension SwarmCloudKit.Storage {
 }
 public typealias HlsSegmentIdGenerator = (_ streamId: Swift.String, _ sn: Swift.Int, _ segmentUrl: Swift.String, _ range: Swift.String?) -> Swift.String
 public let StrictHlsSegmentIdGenerator: (_ streamId: Swift.String, _ sn: Swift.Int, _ segmentUrl: Swift.String, _ range: Swift.String?) -> Swift.String
+public let SequentialHlsSegmentIdGenerator: (_ streamId: Swift.String, _ sn: Swift.Int, _ segmentUrl: Swift.String, _ range: Swift.String?) -> Swift.String
 public typealias JSONDictionary = [Swift.String : Any]
 public struct JSONDictionaryWrapper : Swift.Codable {
   public let jsonDictionary: SwarmCloudKit.JSONDictionary
@@ -815,6 +855,24 @@ extension SwarmCloudKit.Session : SwarmCloudKit.RequestDelegate {
   public func retryResult(for request: SwarmCloudKit.Request, dueTo error: SwarmCloudKit.AFError, completion: @escaping (SwarmCloudKit.RetryResult) -> Swift.Void)
   public func retryRequest(_ request: SwarmCloudKit.Request, withDelay timeDelay: Foundation.TimeInterval?)
 }
+public class HttpRequest {
+  public var path: Swift.String
+  public var queryParams: [(Swift.String, Swift.String)]
+  public var method: Swift.String
+  public var headers: [Swift.String : Swift.String]
+  public var body: [Swift.UInt8]
+  public var address: Swift.String?
+  public var params: [Swift.String : Swift.String]
+  public init()
+  public func hasTokenForHeader(_ headerName: Swift.String, token: Swift.String) -> Swift.Bool
+  public func parseUrlencodedForm() -> [(Swift.String, Swift.String)]
+  public struct MultiPart {
+    public let headers: [Swift.String : Swift.String]
+    public let body: [Swift.UInt8]
+  }
+  public func parseMultiPartFormData() -> [SwarmCloudKit.HttpRequest.MultiPart]
+  @objc deinit
+}
 open class RetryPolicy : SwarmCloudKit.RequestInterceptor {
   public static let defaultRetryLimit: Swift.UInt
   public static let defaultExponentialBackoffBase: Swift.UInt
@@ -868,6 +926,31 @@ public func == <Key>(lhs: SwarmCloudKit.StorageChange<Key>, rhs: SwarmCloudKit.S
   @objc optional func onCurrentPosition() -> Foundation.TimeInterval
 }
 public func MD5(_ input: Swift.String) -> Swift.String
+@_inheritsConvenienceInitializers open class HttpServer : SwarmCloudKit.HttpServerIO {
+  public static let VERSION: Swift.String
+  public init()
+  public var DELETE: SwarmCloudKit.HttpServer.MethodRoute, PATCH: SwarmCloudKit.HttpServer.MethodRoute, HEAD: SwarmCloudKit.HttpServer.MethodRoute, POST: SwarmCloudKit.HttpServer.MethodRoute, GET: SwarmCloudKit.HttpServer.MethodRoute, PUT: SwarmCloudKit.HttpServer.MethodRoute
+  public var delete: SwarmCloudKit.HttpServer.MethodRoute, patch: SwarmCloudKit.HttpServer.MethodRoute, head: SwarmCloudKit.HttpServer.MethodRoute, post: SwarmCloudKit.HttpServer.MethodRoute, get: SwarmCloudKit.HttpServer.MethodRoute, put: SwarmCloudKit.HttpServer.MethodRoute
+  public subscript(path: Swift.String) -> ((SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)? {
+    get
+    set
+  }
+  public var routes: [Swift.String] {
+    get
+  }
+  public var notFoundHandler: ((SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)?
+  public var middleware: [(SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse?]
+  override open func dispatch(_ request: SwarmCloudKit.HttpRequest) -> ([Swift.String : Swift.String], (SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)
+  public struct MethodRoute {
+    public let method: Swift.String
+    public let router: SwarmCloudKit.HttpRouter
+    public subscript(path: Swift.String) -> ((SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)? {
+      get
+      set
+    }
+  }
+  @objc deinit
+}
 public struct DiskConfig {
   public let name: Swift.String
   public let expiry: SwarmCloudKit.Expiry
@@ -2444,6 +2527,11 @@ extension SwarmCloudKit.SessionDelegate : Foundation.URLSessionDownloadDelegate 
   @objc dynamic open func urlSession(_ session: Foundation.URLSession, downloadTask: Foundation.URLSessionDownloadTask, didWriteData bytesWritten: Swift.Int64, totalBytesWritten: Swift.Int64, totalBytesExpectedToWrite: Swift.Int64)
   @objc dynamic open func urlSession(_ session: Foundation.URLSession, downloadTask: Foundation.URLSessionDownloadTask, didFinishDownloadingTo location: Foundation.URL)
 }
+public class HttpParser {
+  public init()
+  public func readHttpRequest(_ socket: SwarmCloudKit.Socket) throws -> SwarmCloudKit.HttpRequest
+  @objc deinit
+}
 public struct RequestAdapterState {
   public let requestID: Foundation.UUID
   public let session: SwarmCloudKit.Session
@@ -2505,6 +2593,13 @@ extension SwarmCloudKit.RequestInterceptor where Self == SwarmCloudKit.Intercept
   public static func interceptor(adapter: any SwarmCloudKit.RequestAdapter, retrier: any SwarmCloudKit.RequestRetrier) -> SwarmCloudKit.Interceptor
   public static func interceptor(adapters: [any SwarmCloudKit.RequestAdapter] = [], retriers: [any SwarmCloudKit.RequestRetrier] = [], interceptors: [any SwarmCloudKit.RequestInterceptor] = []) -> SwarmCloudKit.Interceptor
 }
+open class HttpRouter {
+  public init()
+  public func routes() -> [Swift.String]
+  public func register(_ method: Swift.String?, path: Swift.String, handler: ((SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)?)
+  public func route(_ method: Swift.String?, path: Swift.String) -> ([Swift.String : Swift.String], (SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)?
+  @objc deinit
+}
 public class MemoryStorage<Key, Value> : SwarmCloudKit.StorageAware where Key : Swift.Hashable {
   public init(config: SwarmCloudKit.MemoryConfig)
   @objc deinit
@@ -2518,6 +2613,7 @@ extension SwarmCloudKit.MemoryStorage {
   }
   public func setObject(_ object: Value, forKey key: Key, expiry: SwarmCloudKit.Expiry? = nil)
   public func removeAll()
+  public func trimToSize(_ size: Swift.Int)
   public func removeExpiredObjects()
   public func removeObjectIfExpired(forKey key: Key)
   public func removeObject(forKey key: Key)
@@ -2527,6 +2623,42 @@ extension SwarmCloudKit.MemoryStorage {
 extension SwarmCloudKit.MemoryStorage {
   public func transform<U>() -> SwarmCloudKit.MemoryStorage<Key, U>
 }
+public enum SocketError : Swift.Error {
+  case socketCreationFailed(Swift.String)
+  case socketSettingReUseAddrFailed(Swift.String)
+  case bindFailed(Swift.String)
+  case listenFailed(Swift.String)
+  case writeFailed(Swift.String)
+  case getPeerNameFailed(Swift.String)
+  case convertingPeerNameFailed
+  case getNameInfoFailed(Swift.String)
+  case acceptFailed(Swift.String)
+  case recvFailed(Swift.String)
+  case getSockNameFailed(Swift.String)
+}
+open class Socket : Swift.Hashable, Swift.Equatable {
+  public init(socketFileDescriptor: Swift.Int32)
+  @objc deinit
+  public func hash(into hasher: inout Swift.Hasher)
+  public func close()
+  public func port() throws -> Darwin.in_port_t
+  public func isIPv4() throws -> Swift.Bool
+  public func writeUTF8(_ string: Swift.String) throws
+  public func writeUInt8(_ data: [Swift.UInt8]) throws
+  public func writeUInt8(_ data: Swift.ArraySlice<Swift.UInt8>) throws
+  public func writeData(_ data: Foundation.NSData) throws
+  public func writeData(_ data: Foundation.Data) throws
+  open func read() throws -> Swift.UInt8
+  open func read(length: Swift.Int) throws -> [Swift.UInt8]
+  public func readLine() throws -> Swift.String
+  public func peername() throws -> Swift.String
+  public class func setNoSigPipe(_ socket: Swift.Int32)
+  public class func close(_ socket: Swift.Int32)
+  open var hashValue: Swift.Int {
+    get
+  }
+}
+public func == (socket1: SwarmCloudKit.Socket, socket2: SwarmCloudKit.Socket) -> Swift.Bool
 public enum AFError : Swift.Error {
   public enum MultipartEncodingFailureReason {
     case bodyPartURLInvalid(url: Foundation.URL)
@@ -2945,9 +3077,7 @@ extension SwarmCloudKit.OrderedDictionary : Swift.CustomDebugStringConvertible {
 @objc @_inheritsConvenienceInitializers public class P2pConfig : ObjectiveC.NSObject {
   @objc public static func defaultConfiguration() -> SwarmCloudKit.P2pConfig
   @objc convenience override dynamic public init()
-  @objc required public init(trackerZone: SwarmCloudKit.TrackerZone, p2pEnabled: Swift.Bool = true, debug: Swift.Bool = false, logLevel: SwarmCloudKit.LogLevel = .WARN, httpHeadersHls: [Swift.String : Swift.String]? = nil, hlsMediaFiles: [Swift.String] = ["mp4", "fmp4", "ts", "m4s", "m4v"], customLabel: Swift.String? = nil, localPortHls: Swift.UInt = 0, maxPeerConnections: Swift.Int = 25, maxMediaFilesInPlaylist: Swift.Int = 80, announce: Swift.String? = nil, useHttpRange: Swift.Bool = true, fastStartup: Swift.Bool = true, wifiOnly: Swift.Bool = false, sharePlaylist: Swift.Bool = false, logPersistent: Swift.Bool = false, geoIpPreflight: Swift.Bool = true, insertTagWithTimeOffset: Foundation.TimeInterval = TimeInterval.nan, downloadOnly: Swift.Bool = false, signalConfig: SwarmCloudKit.SignalConfig = SignalConfig(), dcDownloadTimeout: Foundation.TimeInterval = 4.0, httpLoadTime: Foundation.TimeInterval = 3.0, iceServers: [SwarmCloudKit.IceServer] = [IceServer(url: "stun:stun.l.google.com:19302"), IceServer(url: "stun:global.stun.twilio.com:3478?transport=udp")], useStrictHlsSegmentId: Swift.Bool = false, hlsSegmentIdGenerator: @escaping SwarmCloudKit.HlsSegmentIdGenerator = {streamId, sn, segmentUrl, range in
-            return "\(streamId)-\(sn)"
-        }, playerInteractor: (any SwarmCloudKit.PlayerInteractor)? = nil, p2pProtocolVersion: SwarmCloudKit.P2pProtocolVersion = .V8, diskCacheLimit: Swift.UInt = 2000 * 1024 * 1024, memoryCacheCountLimit: Swift.UInt = 20, mediaFileSeparator: Swift.String = ".")
+  @objc required public init(trackerZone: SwarmCloudKit.TrackerZone, p2pEnabled: Swift.Bool = true, debug: Swift.Bool = false, logLevel: SwarmCloudKit.LogLevel = .WARN, httpHeadersHls: [Swift.String : Swift.String]? = nil, hlsMediaFiles: [Swift.String] = ["mp4", "fmp4", "ts", "m4s", "m4v"], customLabel: Swift.String? = nil, localPortHls: Swift.UInt = 0, maxPeerConnections: Swift.Int = 25, maxMediaFilesInPlaylist: Swift.Int = 80, announce: Swift.String? = nil, useHttpRange: Swift.Bool = true, fastStartup: Swift.Bool = true, wifiOnly: Swift.Bool = false, sharePlaylist: Swift.Bool = false, logPersistent: Swift.Bool = false, geoIpPreflight: Swift.Bool = true, insertTagWithTimeOffset: Foundation.TimeInterval = TimeInterval.nan, downloadOnly: Swift.Bool = false, signalConfig: SwarmCloudKit.SignalConfig = SignalConfig(), dcDownloadTimeout: Foundation.TimeInterval = 4.0, httpLoadTime: Foundation.TimeInterval = 3.0, iceServers: [SwarmCloudKit.IceServer] = [IceServer(url: "stun:stun.l.google.com:19302"), IceServer(url: "stun:global.stun.twilio.com:3478?transport=udp")], useStrictHlsSegmentId: Swift.Bool = false, hlsSegmentIdGenerator: SwarmCloudKit.HlsSegmentIdGenerator? = nil, playerInteractor: (any SwarmCloudKit.PlayerInteractor)? = nil, p2pProtocolVersion: SwarmCloudKit.P2pProtocolVersion = .V8, diskCacheLimit: Swift.UInt = 2000 * 1024 * 1024, memoryCacheCountLimit: Swift.UInt = 20, mediaFileSeparator: Swift.String = ".")
   @objc public var announce: Swift.String?
   @objc public var signalConfig: SwarmCloudKit.SignalConfig
   @objc public var customLabel: Swift.String?
@@ -2973,7 +3103,7 @@ extension SwarmCloudKit.OrderedDictionary : Swift.CustomDebugStringConvertible {
   @objc public var iceServers: [SwarmCloudKit.IceServer]
   @objc public var useStrictHlsSegmentId: Swift.Bool
   @objc public var hlsInterceptor: any SwarmCloudKit.HlsInterceptor
-  @objc public var hlsSegmentIdGenerator: SwarmCloudKit.HlsSegmentIdGenerator
+  @objc public var hlsSegmentIdGenerator: SwarmCloudKit.HlsSegmentIdGenerator?
   @objc public var playerInteractor: (any SwarmCloudKit.PlayerInteractor)?
   @objc public var maxMediaFilesInPlaylist: Swift.Int
   @objc public var diskCacheLimit: Swift.UInt
@@ -3661,6 +3791,38 @@ public enum P2pEngineError : Swift.Error {
   case OtherError(reason: Swift.String)
 }
 public let AF: SwarmCloudKit.Session
+public protocol HttpServerIODelegate : AnyObject {
+  func socketConnectionReceived(_ socket: SwarmCloudKit.Socket)
+}
+@_hasMissingDesignatedInitializers open class HttpServerIO {
+  weak public var delegate: (any SwarmCloudKit.HttpServerIODelegate)?
+  public enum HttpServerIOState : Swift.Int32 {
+    case starting
+    case running
+    case stopping
+    case stopped
+    public init?(rawValue: Swift.Int32)
+    public typealias RawValue = Swift.Int32
+    public var rawValue: Swift.Int32 {
+      get
+    }
+  }
+  public var state: SwarmCloudKit.HttpServerIO.HttpServerIOState {
+    get
+  }
+  public var operating: Swift.Bool {
+    get
+  }
+  public var listenAddressIPv4: Swift.String?
+  public var listenAddressIPv6: Swift.String?
+  public func port() throws -> Swift.Int
+  public func isIPv4() throws -> Swift.Bool
+  @objc deinit
+  @available(macOS 10.10, *)
+  public func start(_ port: Darwin.in_port_t = 8080, forceIPv4: Swift.Bool = false, priority: Dispatch.DispatchQoS.QoSClass = DispatchQoS.QoSClass.background) throws
+  public func stop()
+  open func dispatch(_ request: SwarmCloudKit.HttpRequest) -> ([Swift.String : Swift.String], (SwarmCloudKit.HttpRequest) -> SwarmCloudKit.HttpResponse)
+}
 public struct AlamofireExtension<ExtendedType> {
   public var type: ExtendedType {
     get
@@ -3764,6 +3926,10 @@ extension SwarmCloudKit.OrderedSet : Swift.RandomAccessCollection {
   public typealias Iterator = Swift.IndexingIterator<SwarmCloudKit.OrderedSet<T>>
   public typealias SubSequence = Swift.Slice<SwarmCloudKit.OrderedSet<T>>
 }
+@_hasMissingDesignatedInitializers public class Errno {
+  public class func description() -> Swift.String
+  @objc deinit
+}
 public struct HTTPMethod : Swift.RawRepresentable, Swift.Equatable, Swift.Hashable {
   public static let connect: SwarmCloudKit.HTTPMethod
   public static let delete: SwarmCloudKit.HTTPMethod
@@ -3778,6 +3944,10 @@ public struct HTTPMethod : Swift.RawRepresentable, Swift.Equatable, Swift.Hashab
   public let rawValue: Swift.String
   public init(rawValue: Swift.String)
   public typealias RawValue = Swift.String
+}
+extension SwarmCloudKit.Socket {
+  public class func tcpSocketForListen(_ port: Darwin.in_port_t, _ forceIPv4: Swift.Bool = false, _ maxPendingConnection: Swift.Int32 = SOMAXCONN, _ listenAddress: Swift.String? = nil) throws -> SwarmCloudKit.Socket
+  public func acceptClientSocket() throws -> SwarmCloudKit.Socket
 }
 @_hasMissingDesignatedInitializers @available(iOS 12.0, macOS 10.14, tvOS 12.0, *)
 public class StunClient {
@@ -3873,6 +4043,8 @@ extension SwarmCloudKit.URLEncodedFormEncoder.BoolEncoding : Swift.Equatable {}
 extension SwarmCloudKit.URLEncodedFormEncoder.BoolEncoding : Swift.Hashable {}
 extension SwarmCloudKit.URLEncodedFormEncoder.SpaceEncoding : Swift.Equatable {}
 extension SwarmCloudKit.URLEncodedFormEncoder.SpaceEncoding : Swift.Hashable {}
+extension SwarmCloudKit.SerializationError : Swift.Equatable {}
+extension SwarmCloudKit.SerializationError : Swift.Hashable {}
 extension SwarmCloudKit.TrackerZone : Swift.Equatable {}
 extension SwarmCloudKit.TrackerZone : Swift.Hashable {}
 extension SwarmCloudKit.TrackerZone : Swift.RawRepresentable {}
@@ -3927,6 +4099,9 @@ extension SwarmCloudKit.LogLevel : Swift.Hashable {}
 extension SwarmCloudKit.LogLevel : Swift.RawRepresentable {}
 extension SwarmCloudKit.ExpirationMode : Swift.Equatable {}
 extension SwarmCloudKit.ExpirationMode : Swift.Hashable {}
+extension SwarmCloudKit.HttpServerIO.HttpServerIOState : Swift.Equatable {}
+extension SwarmCloudKit.HttpServerIO.HttpServerIOState : Swift.Hashable {}
+extension SwarmCloudKit.HttpServerIO.HttpServerIOState : Swift.RawRepresentable {}
 extension SwarmCloudKit.NatType : Swift.Equatable {}
 extension SwarmCloudKit.NatType : Swift.Hashable {}
 extension SwarmCloudKit.NatType : Swift.RawRepresentable {}

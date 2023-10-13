@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'P2pEngine-iOS'
-  s.version = '3.1.1'
+  s.version = '3.1.2'
   s.license = 'MIT'
   s.summary = 'P2P Streaming Engine for iOS, tvOS and macOS.'
   s.homepage = 'https://www.cdnbye.com/en/'
