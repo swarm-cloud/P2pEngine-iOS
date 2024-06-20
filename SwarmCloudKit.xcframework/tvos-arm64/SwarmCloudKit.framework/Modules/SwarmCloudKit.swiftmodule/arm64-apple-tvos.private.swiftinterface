@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
 // swift-module-flags: -target arm64-apple-tvos13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name SwarmCloudKit
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import Combine
@@ -2495,6 +2495,13 @@ extension SwarmCloudKit.NetworkReachabilityManager.NetworkReachabilityStatus : S
   public class func flush(secondTimeout: Swift.Int64) -> Swift.Bool
   @objc deinit
 }
+@objc public protocol EngineErrorMonitor {
+  @objc var queue: Dispatch.DispatchQueue { get }
+  @objc func onTrackerException(_ reason: Swift.String?)
+  @objc func onSignalException(_ reason: Swift.String?)
+  @objc func onSchedulerException(_ reason: Swift.String?)
+  @objc func onOtherException(_ reason: Swift.String?)
+}
 public struct MemoryConfig {
   public let expiry: SwarmCloudKit.Expiry
   public let countLimit: Swift.UInt
@@ -2920,6 +2927,8 @@ extension SwarmCloudKit.OrderedDictionary {
     @objc get
     @objc set
   }
+  @objc final public func registerEngineErrorMonitor(_ monitor: any SwarmCloudKit.EngineErrorMonitor)
+  @objc final public func unregisterEngineErrorMonitor()
   @objc final public var hlsInterceptor: (any SwarmCloudKit.HlsInterceptor)? {
     @objc get
     @objc set
@@ -2952,7 +2961,7 @@ extension SwarmCloudKit.OrderedDictionary {
   @objc final public func notifyPlaybackStalled()
   @objc final public func stopP2p()
   @discardableResult
-  @objc final public func restartP2p() -> Swift.Bool
+  @objc final public func restartP2p(contentId: Swift.String? = nil) -> Swift.Bool
   @objc final public func shutdown()
   @objc final public func disableP2p()
   @objc final public func enableP2p()
@@ -3077,7 +3086,7 @@ extension SwarmCloudKit.OrderedDictionary : Swift.CustomDebugStringConvertible {
 @objc @_inheritsConvenienceInitializers public class P2pConfig : ObjectiveC.NSObject {
   @objc public static func defaultConfiguration() -> SwarmCloudKit.P2pConfig
   @objc convenience override dynamic public init()
-  @objc required public init(trackerZone: SwarmCloudKit.TrackerZone, p2pEnabled: Swift.Bool = true, debug: Swift.Bool = false, logLevel: SwarmCloudKit.LogLevel = .WARN, httpHeadersHls: [Swift.String : Swift.String]? = nil, hlsMediaFiles: [Swift.String] = ["mp4", "fmp4", "ts", "m4s", "m4v"], customLabel: Swift.String? = nil, localPortHls: Swift.UInt = 0, maxPeerConnections: Swift.Int = 25, maxMediaFilesInPlaylist: Swift.Int = 80, announce: Swift.String? = nil, useHttpRange: Swift.Bool = true, fastStartup: Swift.Bool = true, wifiOnly: Swift.Bool = false, sharePlaylist: Swift.Bool = false, logPersistent: Swift.Bool = false, geoIpPreflight: Swift.Bool = true, insertTagWithTimeOffset: Foundation.TimeInterval = TimeInterval.nan, downloadOnly: Swift.Bool = false, signalConfig: SwarmCloudKit.SignalConfig = SignalConfig(), dcDownloadTimeout: Foundation.TimeInterval = 4.0, httpLoadTime: Foundation.TimeInterval = 3.0, iceServers: [SwarmCloudKit.IceServer] = [IceServer(url: "stun:stun.l.google.com:19302"), IceServer(url: "stun:global.stun.twilio.com:3478?transport=udp")], useStrictHlsSegmentId: Swift.Bool = false, hlsSegmentIdGenerator: SwarmCloudKit.HlsSegmentIdGenerator? = nil, playerInteractor: (any SwarmCloudKit.PlayerInteractor)? = nil, p2pProtocolVersion: SwarmCloudKit.P2pProtocolVersion = .V8, diskCacheLimit: Swift.UInt = 2000 * 1024 * 1024, memoryCacheCountLimit: Swift.UInt = 20, mediaFileSeparator: Swift.String = ".")
+  @objc required public init(trackerZone: SwarmCloudKit.TrackerZone, p2pEnabled: Swift.Bool = true, debug: Swift.Bool = false, logLevel: SwarmCloudKit.LogLevel = .WARN, httpHeadersHls: [Swift.String : Swift.String]? = nil, hlsMediaFiles: [Swift.String] = ["mp4", "fmp4", "ts", "m4s", "m4v"], customLabel: Swift.String? = nil, localPortHls: Swift.UInt = 0, maxPeerConnections: Swift.Int = 25, maxMediaFilesInPlaylist: Swift.Int = 80, announce: Swift.String? = nil, useHttpRange: Swift.Bool = true, fastStartup: Swift.Bool = true, wifiOnly: Swift.Bool = false, prefetchOnly: Swift.Bool = false, sharePlaylist: Swift.Bool = false, logPersistent: Swift.Bool = false, geoIpPreflight: Swift.Bool = true, ICEPreflight: Swift.Bool = true, downloadOnly: Swift.Bool = false, signalConfig: SwarmCloudKit.SignalConfig = SignalConfig(), dcDownloadTimeout: Foundation.TimeInterval = 4.0, httpLoadTime: Foundation.TimeInterval = 0.0, iceServers: [SwarmCloudKit.IceServer] = [IceServer(url: "stun:stun.l.google.com:19302"), IceServer(url: "stun:global.stun.twilio.com:3478?transport=udp")], useStrictHlsSegmentId: Swift.Bool = false, hlsSegmentIdGenerator: SwarmCloudKit.HlsSegmentIdGenerator? = nil, playerInteractor: (any SwarmCloudKit.PlayerInteractor)? = nil, p2pProtocolVersion: SwarmCloudKit.P2pProtocolVersion = .V8, diskCacheLimit: Swift.UInt = 2000 * 1024 * 1024, memoryCacheCountLimit: Swift.UInt = 20, mediaFileSeparator: Swift.String = ".")
   @objc public var announce: Swift.String?
   @objc public var signalConfig: SwarmCloudKit.SignalConfig
   @objc public var customLabel: Swift.String?
@@ -3091,12 +3100,13 @@ extension SwarmCloudKit.OrderedDictionary : Swift.CustomDebugStringConvertible {
   @objc public var useHttpRange: Swift.Bool
   @objc public var fastStartup: Swift.Bool
   @objc public var wifiOnly: Swift.Bool
+  @objc public var prefetchOnly: Swift.Bool
   @objc public var httpHeadersHls: [Swift.String : Swift.String]?
   @objc public var sharePlaylist: Swift.Bool
   @objc public var logPersistent: Swift.Bool
   @objc public var geoIpPreflight: Swift.Bool
+  @objc public var ICEPreflight: Swift.Bool
   @objc public var downloadOnly: Swift.Bool
-  @objc public var playlistTimeOffset: Foundation.TimeInterval
   @objc public var hlsMediaFiles: [Swift.String]
   @objc public var mediaFileSeparator: Swift.String
   @objc public var trackerZone: SwarmCloudKit.TrackerZone
@@ -3265,6 +3275,9 @@ public struct Deque<Element> : Swift.RandomAccessCollection, Swift.MutableCollec
     get
   }
   public func makeIterator() -> SwarmCloudKit.Deque<Element>.Iterator
+  public var toList: [Element] {
+    get
+  }
   public init()
   public init<S>(_ elements: S) where Element == S.Element, S : Swift.Sequence
   public init(unsafeUninitializedCapacity: Swift.Int, initializingWith initializer: (_ buffer: inout Swift.UnsafeMutableBufferPointer<Element>, _ initializedCount: inout Swift.Int) throws -> Swift.Void) rethrows
@@ -3783,12 +3796,6 @@ extension SwarmCloudKit.DownloadResponse {
   public func tryMap<NewSuccess>(_ transform: (Success) throws -> NewSuccess) -> SwarmCloudKit.DownloadResponse<NewSuccess, any Swift.Error>
   public func mapError<NewFailure>(_ transform: (Failure) -> NewFailure) -> SwarmCloudKit.DownloadResponse<Success, NewFailure> where NewFailure : Swift.Error
   public func tryMapError<NewFailure>(_ transform: (Failure) throws -> NewFailure) -> SwarmCloudKit.DownloadResponse<Success, any Swift.Error> where NewFailure : Swift.Error
-}
-public enum P2pEngineError : Swift.Error {
-  case TrackerError(reason: Swift.String)
-  case SignalingError(reason: Swift.String)
-  case SchedulerError(reason: Swift.String)
-  case OtherError(reason: Swift.String)
 }
 public let AF: SwarmCloudKit.Session
 public protocol HttpServerIODelegate : AnyObject {
